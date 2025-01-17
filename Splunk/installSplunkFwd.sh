@@ -1,5 +1,5 @@
 #!/bin/bash
-SERVER_IP="172.20.241.1"
+SERVER_IP="172.20.241.20"
 MGMT_PORT="8089"
 INDEX_PORT="9997"
 SPLUNK_BIN_PATH="/opt/splunkforwarder/bin/splunk"
@@ -31,6 +31,7 @@ function installSplunk(){
 
 function setupDeploymentServer() {
 	sudo "$SPLUNK_BIN_PATH" set deploy-poll "$SERVER_IP:$MGMT_PORT"
+ 	echo -e "\n[deployment-client]" >> "/opt/splunkforwarder/etc/system/local/deploymentclient.conf"
 }
 
 function addForwardServer() {
