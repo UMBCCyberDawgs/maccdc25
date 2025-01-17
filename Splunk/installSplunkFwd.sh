@@ -6,6 +6,7 @@ SPLUNK_BIN_PATH="/opt/splunkforwarder/bin/splunk"
 SPLUNK_HOME_PATH="/opt/splunkforwarder"
 DOWNLOAD_LINK_RPM="https://download.splunk.com/products/universalforwarder/releases/9.4.0/linux/splunkforwarder-9.4.0-6b4ebe426ca6.x86_64.rpm"
 DOWNLOAD_LINK_DPKG="https://download.splunk.com/products/universalforwarder/releases/9.4.0/linux/splunkforwarder-9.4.0-6b4ebe426ca6-linux-amd64.deb"
+LINUX_LOG_FORMAT="[monitor:///var/log]\ndisabled=0\nindex=linux_logs\nsourcetype=syslog\nrecursive=true"
 function checkSplunkInstalled() {
 	if [[ -x "$SPLUNK_BIN_PATH" ]]; then
 		echo "Splunk Universal Forwarder is already installed."
@@ -42,17 +43,22 @@ function startSplunk() {
 	sudo "$SPLUNK_BIN_PATH" start --accept-license
 }
 
+function addMonitor() {
+	echo -e "$LINUX_LOG_FORMAT" >> "/opt/splunkforwarder/etc/system/local/inputs.conf"
+ }
 
 if ! checkSplunkInstalled; then
 	echo "Splunk Universal Forwarder is not installed. Proceeding with installation..."
 	installSplunk
 	setupDeploymentServer
 	addForwardServer
+ 	addMonitor
 	startSplunk
 else
 	echo "No installation required."
 	setupDeploymentServer
 	addForwardServer
+ 	addMonitor
 	startSplunk
 fi
 
