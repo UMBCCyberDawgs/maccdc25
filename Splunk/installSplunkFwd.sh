@@ -18,11 +18,11 @@ function checkSplunkInstalled() {
 function installSplunk(){
 	if command -v rpm &>/dev/null; then
 		echo "RPM-based system detected."
-		wget -O splunkforwarder-9.4.0-6b4ebe426ca6.x86_64.rpm "$DOWNLOAD_LINK_RPM"
+		wget -O splunkforwarder-9.4.0-6b4ebe426ca6.x86_64.rpm "$DOWNLOAD_LINK_RPM" --no-check-certificate
 		sudo rpm  -i splunkforwarder-9.4.0-6b4ebe426ca6.x86_64.rpm
 	elif command -v dpkg &>/dev/null; then
 		echo "DPKG-based system detected."
-		wget -O splunkforwarder-9.4.0-6b4ebe426ca6-linux-amd64.deb "$DOWNLOAD_LINK_DPKG"
+		wget -O splunkforwarder-9.4.0-6b4ebe426ca6-linux-amd64.deb "$DOWNLOAD_LINK_DPKG" --no-check-certificate
 		sudo dpkg -i splunkforwarder-9.4.0-6b4ebe426ca6-linux-amd64.deb
 	else
 		echo "Neither RPM nor DPKG is available. Exiting."
