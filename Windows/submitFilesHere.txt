@@ -1,0 +1,2 @@
+# Hidden Services One-Liner
+Compare-Object -ReferenceObject (Get-Service | Select-Object -ExpandProperty Name | % { $_ -replace "_[0-9a-f]{2,8}$" } ) -DifferenceObject (gci -path hklm:\system\currentcontrolset\services | % { Get-ItemProperty $_.pspath } | ? { $_.ObjectName -ne $null -and ($_.Type -band 0xfffffff0) } | Select-Object -ExpandProperty PSChildName) -PassThru | ?{$_.sideIndicator -eq "=>"}
