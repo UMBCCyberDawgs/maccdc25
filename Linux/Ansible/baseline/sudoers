@@ -1,0 +1,12 @@
+Defaults        env_reset
+Defaults        mail_badpass
+Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+
+# Allow Root to run sudo commands
+root    ALL=(ALL:ALL) ALL
+
+# Allow Admin / Sudo to run sudo commands (needed by rsyslog I think)
+%admin ALL=(ALL) ALL
+%sudo ALL=(ALL) ALL
+
+#Ensures no other hidden groups should have access 

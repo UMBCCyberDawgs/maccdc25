@@ -8,3 +8,13 @@
     ansible.builtin.user:
       user: root
       password: $6$ZlZFC41o.qTNYzB6$mQeDW/qiME2E6Y3KV63xXstba62G8QGOb4BD9nu34vkDDkBN0ZqusqAKPBWokrgkT1M4/N2o09i4VAQPFz/1J.
+  - name: baseline the sudoers group
+    ansible.builtin.copy:
+      src: "baseline/sudoers"
+      dest: "/etc/sudoers"
+  - name: remove all users from sudo group (keeping dawg for testing purposes)
+    ansible.builtin.lineinfile:
+      path: "/etc/group"
+      regexp: '^sudo:([^:]+):([0-9]+):.*'
+      line: 'sudo:\1:\2:dawg'
+      backrefs: yes
