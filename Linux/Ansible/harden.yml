@@ -1,0 +1,10 @@
+---
+- name: Account Hardening
+  hosts: debianhosts
+  remote_user: dawg
+  become: yes
+  tasks:
+  - name: change root password
+    ansible.builtin.user:
+      user: root
+      password: $6$ZlZFC41o.qTNYzB6$mQeDW/qiME2E6Y3KV63xXstba62G8QGOb4BD9nu34vkDDkBN0ZqusqAKPBWokrgkT1M4/N2o09i4VAQPFz/1J.
