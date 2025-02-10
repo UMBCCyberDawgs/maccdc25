@@ -18,3 +18,13 @@
       regexp: '^sudo:([^:]+):([0-9]+):.*'
       line: 'sudo:\1:\2:dawg'
       backrefs: yes
+  - name: remove unecessary ports from firewall
+    ansible.builtin.lineinfile:
+      path: "/etc/group"
+      regexp: '^sudo:([^:]+):([0-9]+):.*'
+      line: 'sudo:\1:\2:dawg'
+      backrefs: yes
+  - name: Basline SSHD Configurations
+    ansible.builtin.copy:
+      src: "baseline/sshd_config_deb"
+      dest: "/etc/ssh/sshd_config"

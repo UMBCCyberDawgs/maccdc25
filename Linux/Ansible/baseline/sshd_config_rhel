@@ -1,0 +1,14 @@
+PermitRootLogin no
+PubkeyAuthentication no
+UsePAM yes
+UseDNS no
+AddressFamily inet
+AllowUsers root 
+Match Address 10.66.1.4  
+        PermitRootLogin yes
+Match Address 172.20.241.0/24.
+        PermitRootLogin yes
+Match Address 172.20.242.0/24.
+        PermitRootLogin yes
+Match Address 172.20.240.0/24.
+        PermitRootLogin yes
