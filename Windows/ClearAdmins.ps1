@@ -12,7 +12,7 @@ $excludedUsers = @("whiteteam", "blackteam")
 # if d is present do on domain level
 if ($d) {
     Write-Host "Starting domain clean"
-    $groupMembers = Get-ADGroupMember -Identity $groupName | Where-Object { $_.objectClass -eq "user" }
+    $groupMembers = Get-ADGroupMember -Identity "Domain Admins" | Where-Object { $_.objectClass -eq "user" }
     foreach ($member in $groupMembers) {
         if ($member.SamAccountName -ne $exemptUser -and $excludedUsers -notcontains $member.SamAccountName) {
             try {
