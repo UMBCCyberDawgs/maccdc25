@@ -32,7 +32,7 @@ set application-group toggle_allow members [ web-browsing ssl dns dns-base ping 
 
 set application-group outbound_updates members [ paloalto-updates pan-db-cloud apt-get dnf yum ms-update git-base github-base ]
 
-set application-group management_services members [ ssh ]
+set application-group config_services members [ ssh ]
 
 set application-group scored_services members [ ssh dns dns-base web-browsing ssl ftp tftp smtp smtp-base ms-ds-smb ms-ds-smb-base ms-ds-smbv3 ]
 

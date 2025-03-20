@@ -111,16 +111,16 @@ set profiles virus EW mlav-engine-filebased-enabled Shell mlav-policy-action ena
 
 set profiles vulnerability NS cloud-inline-analysis yes
 
-set profiles vulnerability NS rules drop-crit-high category any threat-name any severity [ critical high ] action drop
+set profiles vulnerability NS rules drop-crit-high category any threat-name any cve any host any vendor-id any severity [ critical high ] action drop
 
-set profiles vulnerability NS rules alert-all category any threat-name any severity any action drop
+set profiles vulnerability NS rules alert-all category any threat-name any cve any host any vendor-id any severity any action drop
 
 
 set profiles vulnerability EW cloud-inline-analysis yes
 
-set profiles vulnerability EW rules reset-crit-high category any threat-name any severity [ critical high ] action reset-both
+set profiles vulnerability EW rules reset-crit-high category any threat-name any cve any host any vendor-id any severity [ critical high ] action reset-both
 
-set profiles vulnerability EW rules alert-all category any threat-name any severity any action drop
+set profiles vulnerability EW rules alert-all category any threat-name any cve any host any vendor-id any severity any action drop
 
 
 set profiles url-filtering NSEW cloud-inline-cat yes
