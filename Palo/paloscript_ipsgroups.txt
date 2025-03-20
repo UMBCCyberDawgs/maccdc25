@@ -1,0 +1,40 @@
+configure
+
+
+set address public_palo ip-netmask 10.0.35.10
+
+set address private_palo ip-netmask 10.0.5.77
+
+set address manage_palo ip-netmask 10.0.15.10
+
+set address private_ubuntu ip-netmask 10.0.5.32
+
+set address private_docker ip-netmask 10.0.5.83
+
+set address private_bastion ip-netmask 10.0.5.22
+
+
+set address public_subnet ip-netmask 10.0.35.0/24
+
+set address private_subnet ip-netmask 10.0.5.0/24
+
+set address private_services_subnet ip-netmask 192.168.100.0/24
+
+set address manage_subnet ip-netmask 10.0.15.0/24
+
+
+set address-group all_palo static [ public_palo private_palo manage_palo ]
+
+set address-group service_boxes static [ private_ubuntu private_docker private_bastion ]
+
+
+set application-group toggle_allow members [ web-browsing ssl dns dns-base ping ocsp ]
+
+set application-group outbound_updates members [ paloalto-updates pan-db-cloud apt-get yum ms-update git-base github-base ]
+
+set application-group management_services members [ ssh ]
+
+set application-group scored_services members [ ssh dns dns-base web-browsing ssl ftp tftp smtp smtp-base ms-ds-smb ms-ds-smb-base ms-ds-smbv3 ]
+
+set application-group vpn_block members [ tailscale hamachi wireguard open-vpn tor ]
+
