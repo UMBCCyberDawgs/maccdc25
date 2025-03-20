@@ -25,7 +25,7 @@ set rulebase security rules Toggle_Allow log-start yes
 
 set rulebase security rules Update_Services profile-setting group NS
 
-set rulebase security rules Update_Services description "Allow update services"
+set rulebase security rules Update_Services description "Allow update services anywhere"
 
 set rulebase security rules Update_Services action allow
 
@@ -48,7 +48,7 @@ set rulebase security rules Update_Services log-start yes
 
 set rulebase security rules Config_Services profile-setting group NS
 
-set rulebase security rules Config_Services description "Allow config services"
+set rulebase security rules Config_Services description "Allow config services anywhere"
 
 set rulebase security rules Config_Services action allow
 
@@ -71,9 +71,9 @@ set rulebase security rules Config_Services log-start yes
 
 set rulebase security rules Block_VPN profile-setting group NS
 
-set rulebase security rules Block_VPN description "Block Tailscale, Wireguard, etc"
+set rulebase security rules Block_VPN description "Block Tailscale, Wireguard, etc anywhere"
 
-set rulebase security rules Block_VPN action Drop
+set rulebase security rules Block_VPN action drop
 
 set rulebase security rules Block_VPN service application-default
 
