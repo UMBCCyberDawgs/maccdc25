@@ -1,3 +1,5 @@
+set cli scripting-mode on
+
 configure
 
 
@@ -34,7 +36,12 @@ set application-group outbound_updates members [ paloalto-updates pan-db-cloud a
 
 set application-group config_services members [ ssh ]
 
-set application-group scored_services members [ ssh dns dns-base web-browsing ssl ftp tftp smtp smtp-base ms-ds-smb ms-ds-smb-base ms-ds-smbv3 ]
-
 set application-group vpn_block members [ tailscale hamachi wireguard open-vpn tor ]
 
+set application-group bastion_services members [ ssh ]
+
+set application-group ubuntu_services members [ dns dns-base web-browsing ssh ]
+
+set application-group docker_services members [ ftp tftp web-browsing ssl smtp smtp-base ms-ds-smb ms-ds-smb-base ms-ds-smbv3 ssh ]
+
+commit

@@ -5,6 +5,8 @@ OUTPUT_FILE = "paloscript_rules.txt"
 PATTERN = {"name": 0, "desc": 1, "action": 2, "from": 3, "to": 4, "source": 5, "dest": 6, "profile": 7, "apps": 8}
 
 with open(OUTPUT_FILE, "w") as f:
+    f.write('set cli scripting-mode on\n')
+    f.write('\n')
     f.write('configure\n')
     f.write('\n')
     with open(SOURCE_CSV) as stream:
@@ -40,4 +42,6 @@ with open(OUTPUT_FILE, "w") as f:
     f.write('set rulebase default-security-rules rules interzone-default action deny\n')
     f.write('\n')
     f.write('set rulebase default-security-rules rules interzone-default log-end yes\n')
+    f.write('\n')
+    f.write('commit\n')
     f.write('\n')

@@ -1,3 +1,5 @@
+set cli scripting-mode on
+
 configure
 
 set rulebase security rules Toggle_Allow profile-setting group NS
@@ -192,3 +194,4 @@ set rulebase default-security-rules rules interzone-default action deny
 
 set rulebase default-security-rules rules interzone-default log-end yes
 
+commit

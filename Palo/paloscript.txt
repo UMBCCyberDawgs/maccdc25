@@ -1,0 +1,444 @@
+configure
+
+exit
+
+set cli scripting-mode on
+
+
+set deviceconfig system service disable-telnet yes disable-http yes disable-icmp yes
+
+set deviceconfig system service disable-http-ocsp yes disable-snmp yes disable-userid-syslog-listener-ssl yes disable-userid-syslog-listener-udp yes
+
+
+set system setting shared-policy disable
+
+set system setting template disable
+
+configure
+
+set deviceconfig setting management disable-commit-recovery yes
+
+delete deviceconfig system panorama
+
+
+set deviceconfig setting management admin-session max-session-time 60
+
+set deviceconfig setting management idle-timeout 14
+
+set mgt-config password-complexity enabled yes
+
+set mgt-config password-complexity minimum-length 8
+
+set deviceconfig setting management admin-lockout failed-attempts 3
+
+set deviceconfig setting management admin-lockout lockout-time 4
+
+
+set deviceconfig system dns-setting servers primary 1.1.1.1
+
+set deviceconfig system dns-setting servers secondary 8.8.8.8
+
+
+set deviceconfig system login-banner "Authorized users only. Unauthorized users are subject to persecution by the fullest extent of the law."
+
+set deviceconfig system ack-login-banner yes
+
+
+set address public_palo ip-netmask 10.0.35.10
+
+set address private_palo ip-netmask 10.0.5.77
+
+set address manage_palo ip-netmask 10.0.15.10
+
+set address private_ubuntu ip-netmask 10.0.5.32
+
+set address private_docker ip-netmask 10.0.5.83
+
+set address private_bastion ip-netmask 10.0.5.22
+
+
+set address public_subnet ip-netmask 10.0.35.0/24
+
+set address private_subnet ip-netmask 10.0.5.0/24
+
+set address private_services_subnet ip-netmask 192.168.100.0/24
+
+set address manage_subnet ip-netmask 10.0.15.0/24
+
+
+set address-group all_palo static [ public_palo private_palo manage_palo ]
+
+set address-group service_boxes static [ private_ubuntu private_docker private_bastion ]
+
+
+set application-group toggle_allow members [ web-browsing ssl dns dns-base ping ocsp ]
+
+set application-group outbound_updates members [ paloalto-updates pan-db-cloud apt-get dnf yum ms-update git-base github-base ]
+
+set application-group config_services members [ ssh ]
+
+set application-group vpn_block members [ tailscale hamachi wireguard open-vpn tor ]
+
+set application-group bastion_services members [ ssh ]
+
+set application-group ubuntu_services members [ dns dns-base web-browsing ssh ]
+
+set application-group docker_services members [ ftp tftp web-browsing ssl smtp smtp-base ms-ds-smb ms-ds-smb-base ms-ds-smbv3 ssh ]
+
+
+set profiles spyware NS cloud-inline-analysis yes
+
+set profiles spyware NS rules drop-crit-high category any threat-name any severity [ critical high ] action drop
+
+set profiles spyware NS rules alert-all category any threat-name any severity any action drop
+
+
+set profiles spyware NS botnet-domains sinkhole ipv4-address 127.0.0.1 ipv6-address ::1
+
+set profiles spyware NS botnet-domains dns-security-categories pan-dns-sec-cc log-level none action sinkhole
+
+set profiles spyware NS botnet-domains dns-security-categories pan-dns-sec-grayware log-level none action sinkhole
+
+set profiles spyware NS botnet-domains dns-security-categories pan-dns-sec-malware log-level none action sinkhole
+
+set profiles spyware NS botnet-domains dns-security-categories pan-dns-sec-phishing log-level none action sinkhole
+
+set profiles spyware NS botnet-domains dns-security-categories pan-dns-sec-proxy log-level none action sinkhole
+
+
+set profiles spyware EW cloud-inline-analysis yes
+
+set profiles spyware EW rules reset-crit-high category any threat-name any severity [ critical high ] action reset-both
+
+set profiles spyware EW rules alert-all category any threat-name any severity any action drop
+
+
+set profiles spyware EW botnet-domains sinkhole ipv4-address 127.0.0.1 ipv6-address ::1
+
+set profiles spyware EW botnet-domains dns-security-categories pan-dns-sec-cc log-level none action sinkhole
+
+set profiles spyware EW botnet-domains dns-security-categories pan-dns-sec-grayware log-level none action sinkhole
+
+set profiles spyware EW botnet-domains dns-security-categories pan-dns-sec-malware log-level none action sinkhole
+
+set profiles spyware EW botnet-domains dns-security-categories pan-dns-sec-phishing log-level none action sinkhole
+
+set profiles spyware EW botnet-domains dns-security-categories pan-dns-sec-proxy log-level none action sinkhole
+
+
+set profiles virus NS decoder ftp action drop mlav-action drop wildfire-action drop
+
+set profiles virus NS decoder http action drop mlav-action drop wildfire-action drop
+
+set profiles virus NS decoder http2 action drop mlav-action drop wildfire-action drop
+
+set profiles virus NS decoder smtp action drop mlav-action drop wildfire-action drop
+
+set profiles virus NS decoder imap action drop mlav-action drop wildfire-action drop
+
+set profiles virus NS decoder pop3 action drop mlav-action drop wildfire-action drop
+
+set profiles virus NS decoder ftp action drop mlav-action drop wildfire-action drop
+
+set profiles virus NS decoder smb action drop mlav-action drop wildfire-action drop
+
+
+set profiles virus NS mlav-engine-filebased-enabled "Executable Linked Format" mlav-policy-action enable
+
+set profiles virus NS mlav-engine-filebased-enabled "PowerShell Script 1" mlav-policy-action enable
+
+set profiles virus NS mlav-engine-filebased-enabled "PowerShell Script 2" mlav-policy-action enable
+
+set profiles virus NS mlav-engine-filebased-enabled "Windows Executables" mlav-policy-action enable
+
+set profiles virus NS mlav-engine-filebased-enabled MSOffice mlav-policy-action enable
+
+set profiles virus NS mlav-engine-filebased-enabled MachO mlav-policy-action enable
+
+set profiles virus NS mlav-engine-filebased-enabled OOXML mlav-policy-action enable
+
+set profiles virus NS mlav-engine-filebased-enabled Shell mlav-policy-action enable
+
+
+set profiles virus EW decoder ftp action reset-both mlav-action reset-both wildfire-action reset-both
+
+set profiles virus EW decoder http action reset-both mlav-action reset-both wildfire-action reset-both
+
+set profiles virus EW decoder http2 action reset-both mlav-action reset-both wildfire-action reset-both
+
+set profiles virus EW decoder smtp action reset-both mlav-action reset-both wildfire-action reset-both
+
+set profiles virus EW decoder imap action reset-both mlav-action reset-both wildfire-action reset-both
+
+set profiles virus EW decoder pop3 action reset-both mlav-action reset-both wildfire-action reset-both
+
+set profiles virus EW decoder ftp action reset-both mlav-action reset-both wildfire-action reset-both
+
+set profiles virus EW decoder smb action reset-both mlav-action reset-both wildfire-action reset-both
+
+
+set profiles virus EW mlav-engine-filebased-enabled "Executable Linked Format" mlav-policy-action enable
+
+set profiles virus EW mlav-engine-filebased-enabled "PowerShell Script 1" mlav-policy-action enable
+
+set profiles virus EW mlav-engine-filebased-enabled "PowerShell Script 2" mlav-policy-action enable
+
+set profiles virus EW mlav-engine-filebased-enabled "Windows Executables" mlav-policy-action enable
+
+set profiles virus EW mlav-engine-filebased-enabled MSOffice mlav-policy-action enable
+
+set profiles virus EW mlav-engine-filebased-enabled MachO mlav-policy-action enable
+
+set profiles virus EW mlav-engine-filebased-enabled OOXML mlav-policy-action enable
+
+set profiles virus EW mlav-engine-filebased-enabled Shell mlav-policy-action enable
+
+
+set profiles vulnerability NS cloud-inline-analysis yes
+
+set profiles vulnerability NS rules drop-crit-high category any threat-name any cve any host any vendor-id any severity [ critical high ] action drop
+
+set profiles vulnerability NS rules alert-all category any threat-name any cve any host any vendor-id any severity any action drop
+
+
+set profiles vulnerability EW cloud-inline-analysis yes
+
+set profiles vulnerability EW rules reset-crit-high category any threat-name any cve any host any vendor-id any severity [ critical high ] action reset-both
+
+set profiles vulnerability EW rules alert-all category any threat-name any cve any host any vendor-id any severity any action drop
+
+
+set profiles url-filtering NSEW cloud-inline-cat yes
+
+set profiles url-filtering NSEW block [ command-and-control grayware hacking malware newly-registered-domain proxy-avoidance-and-anonymizers ransomware ]
+
+
+set profile-group NS spyware NS virus NS vulnerability NS url-filtering NSEW wildfire-analysis default
+
+set profile-group NS file-blocking "basic file blocking" 
+
+set profile-group EW spyware EW virus EW vulnerability EW url-filtering NSEW wildfire-analysis default
+
+set profile-group EW file-blocking "basic file blocking" 
+
+
+set network profiles zone-protection-profile Default discard-overlapping-tcp-segment-mismatch yes
+
+set network profiles zone-protection-profile Default discard-unknown-option yes
+
+set network profiles zone-protection-profile Default tcp-reject-non-syn yes
+
+set network profiles zone-protection-profile Default flood tcp-syn enable yes
+
+set network profiles zone-protection-profile Default flood tcp-syn syn-cookies maximal-rate 40000 activate-rate 10000 alarm-rate 10000
+
+set network profiles zone-protection-profile Default flood icmp enable yes
+
+set network profiles zone-protection-profile Default flood icmp red activate-rate 10000 alarm-rate 10000 maximal-rate 40000
+
+set network profiles zone-protection-profile Default flood udp enable yes
+
+set network profiles zone-protection-profile Default flood udp red activate-rate 10000 alarm-rate 10000 maximal-rate 40000
+
+set network profiles zone-protection-profile Default flood other-ip enable yes
+
+set network profiles zone-protection-profile Default flood other-ip red activate-rate 10000 alarm-rate 10000 maximal-rate 40000
+
+set network profiles zone-protection-profile Default flood icmpv6 enable yes
+
+set network profiles zone-protection-profile Default flood icmpv6 red activate-rate 10000 alarm-rate 10000 maximal-rate 40000
+
+
+set rulebase security rules Toggle_Allow profile-setting group NS
+
+set rulebase security rules Toggle_Allow description "[TOGGLE] Allow HTTP, HTTPS, DNS, Ping outbound from Private, Management to WAN"
+
+set rulebase security rules Toggle_Allow action allow
+
+set rulebase security rules Toggle_Allow service application-default
+
+set rulebase security rules Toggle_Allow from [ Private Management ]
+
+set rulebase security rules Toggle_Allow to [ WAN ]
+
+set rulebase security rules Toggle_Allow source [ any ]
+
+set rulebase security rules Toggle_Allow destination [ any ]
+
+set rulebase security rules Toggle_Allow application [ toggle_allow ]
+
+set rulebase security rules Toggle_Allow log-start no
+
+set rulebase security rules Toggle_Allow log-start yes
+
+
+set rulebase security rules Update_Services profile-setting group NS
+
+set rulebase security rules Update_Services description "Allow update services anywhere"
+
+set rulebase security rules Update_Services action allow
+
+set rulebase security rules Update_Services service application-default
+
+set rulebase security rules Update_Services from [ Private Management ]
+
+set rulebase security rules Update_Services to [ WAN ]
+
+set rulebase security rules Update_Services source [ any ]
+
+set rulebase security rules Update_Services destination [ any ]
+
+set rulebase security rules Update_Services application [ outbound_updates  ]
+
+set rulebase security rules Update_Services log-start no
+
+set rulebase security rules Update_Services log-start yes
+
+
+set rulebase security rules Config_Services profile-setting group NS
+
+set rulebase security rules Config_Services description "Allow config services anywhere"
+
+set rulebase security rules Config_Services action allow
+
+set rulebase security rules Config_Services service application-default
+
+set rulebase security rules Config_Services from [ any ]
+
+set rulebase security rules Config_Services to [ any ]
+
+set rulebase security rules Config_Services source [ any ]
+
+set rulebase security rules Config_Services destination [ any ]
+
+set rulebase security rules Config_Services application [ config_services ]
+
+set rulebase security rules Config_Services log-start no
+
+set rulebase security rules Config_Services log-start yes
+
+
+set rulebase security rules Block_VPN profile-setting group NS
+
+set rulebase security rules Block_VPN description "Block Tailscale, Wireguard, etc anywhere"
+
+set rulebase security rules Block_VPN action drop
+
+set rulebase security rules Block_VPN service application-default
+
+set rulebase security rules Block_VPN from [ any ]
+
+set rulebase security rules Block_VPN to [ any ]
+
+set rulebase security rules Block_VPN source [ any ]
+
+set rulebase security rules Block_VPN destination [ any ]
+
+set rulebase security rules Block_VPN application [ vpn_block ]
+
+set rulebase security rules Block_VPN log-start no
+
+set rulebase security rules Block_VPN log-start yes
+
+
+set rulebase security rules Bastion_Services profile-setting group NS
+
+set rulebase security rules Bastion_Services description "Allow SSH from WAN to Bastion"
+
+set rulebase security rules Bastion_Services action allow
+
+set rulebase security rules Bastion_Services service application-default
+
+set rulebase security rules Bastion_Services from [ WAN ]
+
+set rulebase security rules Bastion_Services to [ Private Management ]
+
+set rulebase security rules Bastion_Services source [ public_subnet ]
+
+set rulebase security rules Bastion_Services destination [ private_bastion ]
+
+set rulebase security rules Bastion_Services application [ bastion_services ]
+
+set rulebase security rules Bastion_Services log-start no
+
+set rulebase security rules Bastion_Services log-start yes
+
+
+set rulebase security rules Ubuntu_Services profile-setting group NS
+
+set rulebase security rules Ubuntu_Services description "Allow DNS, HTTP, SSH from WAN to Ubuntu"
+
+set rulebase security rules Ubuntu_Services action allow
+
+set rulebase security rules Ubuntu_Services service application-default
+
+set rulebase security rules Ubuntu_Services from [ WAN ]
+
+set rulebase security rules Ubuntu_Services to [ Private ]
+
+set rulebase security rules Ubuntu_Services source [ public_subnet ]
+
+set rulebase security rules Ubuntu_Services destination [ private_ubuntu ]
+
+set rulebase security rules Ubuntu_Services application [ ubuntu_services ]
+
+set rulebase security rules Ubuntu_Services log-start no
+
+set rulebase security rules Ubuntu_Services log-start yes
+
+
+set rulebase security rules Docker_Services profile-setting group NS
+
+set rulebase security rules Docker_Services description "Allow FTP, TFTP, SMTP, HTTP, HTTPS, SMB, SSH from WAN to Docker"
+
+set rulebase security rules Docker_Services action allow
+
+set rulebase security rules Docker_Services service application-default
+
+set rulebase security rules Docker_Services from [ WAN ]
+
+set rulebase security rules Docker_Services to [ Private ]
+
+set rulebase security rules Docker_Services source [ public_subnet ]
+
+set rulebase security rules Docker_Services destination [ private_docker ]
+
+set rulebase security rules Docker_Services application [ docker_services ]
+
+set rulebase security rules Docker_Services log-start no
+
+set rulebase security rules Docker_Services log-start yes
+
+
+set rulebase security rules Default_Deny profile-setting group NS
+
+set rulebase security rules Default_Deny description "Default deny"
+
+set rulebase security rules Default_Deny action drop
+
+set rulebase security rules Default_Deny service application-default
+
+set rulebase security rules Default_Deny from [ any ]
+
+set rulebase security rules Default_Deny to [ any ]
+
+set rulebase security rules Default_Deny source [ any ]
+
+set rulebase security rules Default_Deny destination [ any ]
+
+set rulebase security rules Default_Deny application [ any ]
+
+set rulebase security rules Default_Deny log-start no
+
+set rulebase security rules Default_Deny log-start yes
+
+
+set rulebase default-security-rules rules intrazone-default action drop
+
+set rulebase default-security-rules rules intrazone-default log-end yes
+
+set rulebase default-security-rules rules interzone-default action deny
+
+set rulebase default-security-rules rules interzone-default log-end yes
+
+commit
