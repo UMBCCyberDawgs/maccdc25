@@ -38,6 +38,12 @@ set deviceconfig system dns-setting servers primary 1.1.1.1
 
 set deviceconfig system dns-setting servers secondary 8.8.8.8
 
+set network interface ethernet ethernet1/1 layer3 ipv6 enabled no
+
+set network interface ethernet ethernet1/2 layer3 ipv6 enabled no
+
+set network interface ethernet ethernet1/3 layer3 ipv6 enabled no
+
 
 set deviceconfig system login-banner "Authorized users only. Unauthorized users are subject to persecution by the fullest extent of the law."
 
