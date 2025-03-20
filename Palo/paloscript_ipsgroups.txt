@@ -30,7 +30,7 @@ set address-group service_boxes static [ private_ubuntu private_docker private_b
 
 set application-group toggle_allow members [ web-browsing ssl dns dns-base ping ocsp ]
 
-set application-group outbound_updates members [ paloalto-updates pan-db-cloud apt-get yum ms-update git-base github-base ]
+set application-group outbound_updates members [ paloalto-updates pan-db-cloud apt-get dnf yum ms-update git-base github-base ]
 
 set application-group management_services members [ ssh ]
 
