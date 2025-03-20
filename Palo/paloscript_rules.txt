@@ -4,7 +4,7 @@ set rulebase security rules Toggle_Allow profile-setting group NS
 
 set rulebase security rules Toggle_Allow description "[TOGGLE] Allow HTTP, HTTPS, DNS, Ping outbound from Private, Management to WAN"
 
-set rulebase security rules Toggle_Allow description Allow
+set rulebase security rules Toggle_Allow action allow
 
 set rulebase security rules Toggle_Allow service application-default
 
@@ -27,7 +27,7 @@ set rulebase security rules Update_Services profile-setting group NS
 
 set rulebase security rules Update_Services description "Allow update services"
 
-set rulebase security rules Update_Services description Allow
+set rulebase security rules Update_Services action allow
 
 set rulebase security rules Update_Services service application-default
 
@@ -50,7 +50,7 @@ set rulebase security rules Config_Services profile-setting group NS
 
 set rulebase security rules Config_Services description "Allow config services"
 
-set rulebase security rules Config_Services description Allow
+set rulebase security rules Config_Services action allow
 
 set rulebase security rules Config_Services service application-default
 
@@ -73,7 +73,7 @@ set rulebase security rules Block_VPN profile-setting group NS
 
 set rulebase security rules Block_VPN description "Block Tailscale, Wireguard, etc"
 
-set rulebase security rules Block_VPN description Drop
+set rulebase security rules Block_VPN action Drop
 
 set rulebase security rules Block_VPN service application-default
 
@@ -96,7 +96,7 @@ set rulebase security rules Bastion_Services profile-setting group NS
 
 set rulebase security rules Bastion_Services description "Allow SSH from WAN to Bastion"
 
-set rulebase security rules Bastion_Services description Allow
+set rulebase security rules Bastion_Services action allow
 
 set rulebase security rules Bastion_Services service application-default
 
@@ -119,7 +119,7 @@ set rulebase security rules Ubuntu_Services profile-setting group NS
 
 set rulebase security rules Ubuntu_Services description "Allow DNS, HTTP, SSH from WAN to Ubuntu"
 
-set rulebase security rules Ubuntu_Services description Allow
+set rulebase security rules Ubuntu_Services action allow
 
 set rulebase security rules Ubuntu_Services service application-default
 
@@ -142,7 +142,7 @@ set rulebase security rules Docker_Services profile-setting group NS
 
 set rulebase security rules Docker_Services description "Allow FTP, TFTP, SMTP, HTTP, HTTPS, SMB, SSH from WAN to Docker"
 
-set rulebase security rules Docker_Services description Allow
+set rulebase security rules Docker_Services action allow
 
 set rulebase security rules Docker_Services service application-default
 

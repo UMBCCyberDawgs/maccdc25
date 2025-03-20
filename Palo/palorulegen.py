@@ -14,7 +14,7 @@ with open(OUTPUT_FILE, "w") as f:
             f.write('\n')
             f.write(f'set rulebase security rules {row[PATTERN["name"]]} description "{row[PATTERN["desc"]]}"\n')
             f.write('\n')
-            f.write(f'set rulebase security rules {row[PATTERN["name"]]} description {row[PATTERN["action"]]}\n')
+            f.write(f'set rulebase security rules {row[PATTERN["name"]]} action {row[PATTERN["action"]]}\n')
             f.write('\n')
             f.write(f'set rulebase security rules {row[PATTERN["name"]]} service application-default\n')
             f.write('\n')
