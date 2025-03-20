@@ -347,6 +347,29 @@ set rulebase security rules Block_VPN log-start no
 set rulebase security rules Block_VPN log-start yes
 
 
+set rulebase security rules Palo profile-setting group any
+
+set rulebase security rules Palo description "Block_GUI"
+
+set rulebase security rules Palo action Block Palo web interface
+
+set rulebase security rules Palo service application-default
+
+set rulebase security rules Palo from [ drop ]
+
+set rulebase security rules Palo to [ any ]
+
+set rulebase security rules Palo source [ any ]
+
+set rulebase security rules Palo destination [ any ]
+
+set rulebase security rules Palo application [ NS ]
+
+set rulebase security rules Palo log-start no
+
+set rulebase security rules Palo log-start yes
+
+
 set rulebase security rules Bastion_Services profile-setting group NS
 
 set rulebase security rules Bastion_Services description "Allow SSH from WAN to Bastion"
