@@ -1,0 +1,47 @@
+configure
+
+exit
+
+
+set deviceconfig system service disable-telnet yes disable-http yes disable-icmp yes
+
+set deviceconfig system service disable-http-ocsp yes disable-snmp yes disable-userid-syslog-listener-ssl yes disable-userid-syslog-listener-udp yes
+
+
+set system setting shared-policy disable
+
+set system setting template disable
+
+configure
+
+set deviceconfig setting management disable-commit-recovery yes
+
+set shared log-settings profiles defaultlogs match-list traffic send-to-panorama no
+
+set shared log-settings profiles defaultlogs match-list auth send-to-panorama no
+
+set shared log-settings profiles defaultlogs match-list threat send-to-panorama no
+
+delete deviceconfig system panorama
+
+
+set deviceconfig setting management admin-session max-session-time 60
+
+set deviceconfig setting management idle-timeout 14
+
+set mgt-config password-complexity enabled yes
+
+set mgt-config password-complexity minimum-length 8
+
+set deviceconfig setting management admin-lockout failed-attempts 3
+
+set deviceconfig setting management admin-lockout lockout-time 4
+
+set deviceconfig system dns-setting servers primary 1.1.1.1
+
+set deviceconfig system dns-setting servers secondary 8.8.8.8
+
+
+set deviceconfig system login-banner "Authorized users only. Unauthorized users are subject to persecution by the fullest extent of the law."
+
+set deviceconfig system ack-login-banner yes
