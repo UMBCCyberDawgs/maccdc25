@@ -1,0 +1,65 @@
+# Remove any existing rules
+-D
+
+# Buffer Size
+## Feel free to increase this if the machine panic's
+-b 8192
+
+# Failure Mode
+## Possible values: 0 (silent), 1 (printk, print a failure message), 2 (panic, halt the system)
+-f 1
+
+# Ignore errors
+## e.g. caused by users or files not found in the local environment
+-i
+
+# Self Auditing ---------------------------------------------------------------
+
+## Audit the audit logs
+### Successful and unsuccessful attempts to read information from the audit records
+-w /var/log/audit/ -p wra -k auditlog
+-w /var/audit/ -p wra -k auditlog
+
+## Auditd configuration
+### Modifications to audit configuration that occur while the audit collection functions are operating
+-w /etc/audit/ -p wa -k auditconfig
+-w /etc/libaudit.conf -p wa -k auditconfig
+-w /etc/audisp/ -p wa -k audispconfig
+
+## Monitor for use of audit management tools
+-w /sbin/auditctl -p x -k audittools
+-w /sbin/auditd -p x -k audittools
+-w /usr/sbin/auditd -p x -k audittools
+-w /usr/sbin/augenrules -p x -k audittools
+
+## Access to all audit trails
+
+-a always,exit -F path=/usr/sbin/ausearch -F perm=x -k audittools
+-a always,exit -F path=/usr/sbin/aureport -F perm=x -k audittools
+-a always,exit -F path=/usr/sbin/aulast -F perm=x -k audittools
+-a always,exit -F path=/usr/sbin/aulastlogin -F perm=x -k audittools
+-a always,exit -F path=/usr/sbin/auvirt -F perm=x -k audittools
+
+# Filters ---------------------------------------------------------------------
+
+## Ignore current working directory records
+-a always,exclude -F msgtype=CWD
+
+## This prevents chrony from overwhelming the logs
+-a never,exit -F arch=b64 -S adjtimex -F auid=-1 -F uid=chrony -F subj_type=chronyd_t
+
+## This is not very interesting and wastes a lot of space if the server is public facing
+-a always,exclude -F msgtype=CRYPTO_KEY_USER
+
+## Open VM Tools
+-a exit,never -F arch=b64 -S all -F exe=/usr/bin/vmtoolsd
+
+## High Volume Event Filter (especially on Linux Workstations)
+-a never,exit -F arch=b32 -F dir=/dev/shm/ -F key=sharedmemaccess
+-a never,exit -F arch=b64 -F dir=/dev/shm/ -F key=sharedmemaccess
+
+-a never,exit -F arch=b32 -F dir=/var/lock/lvm/ -F key=locklvm
+-a never,exit -F arch=b64 -F dir=/var/lock/lvm/ -F key=locklvm
+
+-a always,exit -F arch=b32 -S execve -F euid=0
+-a always,exit -F arch=b64 -S execve -F euid=0
