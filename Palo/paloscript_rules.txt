@@ -161,6 +161,29 @@ set rulebase security rules Docker_Services log-start no
 set rulebase security rules Docker_Services log-start yes
 
 
+set rulebase security rules Default_Deny profile-setting group NS
+
+set rulebase security rules Default_Deny description "Default deny"
+
+set rulebase security rules Default_Deny action drop
+
+set rulebase security rules Default_Deny service application-default
+
+set rulebase security rules Default_Deny from [ any ]
+
+set rulebase security rules Default_Deny to [ any ]
+
+set rulebase security rules Default_Deny source [ any ]
+
+set rulebase security rules Default_Deny destination [ any ]
+
+set rulebase security rules Default_Deny application [ any ]
+
+set rulebase security rules Default_Deny log-start no
+
+set rulebase security rules Default_Deny log-start yes
+
+
 set rulebase default-security-rules rules intrazone-default action drop
 
 set rulebase default-security-rules rules intrazone-default log-end yes
