@@ -255,211 +255,211 @@ set network profiles zone-protection-profile Default flood icmpv6 enable yes
 set network profiles zone-protection-profile Default flood icmpv6 red activate-rate 10000 alarm-rate 10000 maximal-rate 40000
 
 
-set rulebase security rules Palo profile-setting group any
+set rulebase security rules Toggle_Allow profile-setting group NS
 
-set rulebase security rules Palo description "Toggle_Allow"
+set rulebase security rules Toggle_Allow description "[TOGGLE] Allow HTTP, HTTPS, DNS, Ping outbound from Private, Management to WAN"
 
-set rulebase security rules Palo action [TOGGLE] Allow HTTP, HTTPS, DNS, Ping outbound from Private, Management to WAN
+set rulebase security rules Toggle_Allow action allow
 
-set rulebase security rules Palo service application-default
+set rulebase security rules Toggle_Allow service application-default
 
-set rulebase security rules Palo from [ allow ]
+set rulebase security rules Toggle_Allow from [ Private Management ]
 
-set rulebase security rules Palo to [ Private Management ]
+set rulebase security rules Toggle_Allow to [ WAN ]
 
-set rulebase security rules Palo source [ WAN ]
+set rulebase security rules Toggle_Allow source [ any ]
 
-set rulebase security rules Palo destination [ any ]
+set rulebase security rules Toggle_Allow destination [ any ]
 
-set rulebase security rules Palo application [ NS ]
+set rulebase security rules Toggle_Allow application [ toggle_allow ]
 
-set rulebase security rules Palo log-start no
+set rulebase security rules Toggle_Allow log-start no
 
-set rulebase security rules Palo log-start yes
+set rulebase security rules Toggle_Allow log-start yes
 
 
-set rulebase security rules Palo profile-setting group any
+set rulebase security rules Update_Services profile-setting group NS
 
-set rulebase security rules Palo description "Update_Services"
+set rulebase security rules Update_Services description "Allow update services anywhere"
 
-set rulebase security rules Palo action Allow update services anywhere
+set rulebase security rules Update_Services action allow
 
-set rulebase security rules Palo service application-default
+set rulebase security rules Update_Services service application-default
 
-set rulebase security rules Palo from [ allow ]
+set rulebase security rules Update_Services from [ Private Management ]
 
-set rulebase security rules Palo to [ Private Management ]
+set rulebase security rules Update_Services to [ WAN ]
 
-set rulebase security rules Palo source [ WAN ]
+set rulebase security rules Update_Services source [ any ]
 
-set rulebase security rules Palo destination [ any ]
+set rulebase security rules Update_Services destination [ any ]
 
-set rulebase security rules Palo application [ NS ]
+set rulebase security rules Update_Services application [ outbound_updates  ]
 
-set rulebase security rules Palo log-start no
+set rulebase security rules Update_Services log-start no
 
-set rulebase security rules Palo log-start yes
+set rulebase security rules Update_Services log-start yes
 
 
-set rulebase security rules Palo profile-setting group any
+set rulebase security rules Config_Services profile-setting group EW
 
-set rulebase security rules Palo description "Config_Services"
+set rulebase security rules Config_Services description "Allow config services anywhere"
 
-set rulebase security rules Palo action Allow config services anywhere
+set rulebase security rules Config_Services action allow
 
-set rulebase security rules Palo service application-default
+set rulebase security rules Config_Services service application-default
 
-set rulebase security rules Palo from [ allow ]
+set rulebase security rules Config_Services from [ any ]
 
-set rulebase security rules Palo to [ any ]
+set rulebase security rules Config_Services to [ any ]
 
-set rulebase security rules Palo source [ any ]
+set rulebase security rules Config_Services source [ any ]
 
-set rulebase security rules Palo destination [ any ]
+set rulebase security rules Config_Services destination [ any ]
 
-set rulebase security rules Palo application [ EW ]
+set rulebase security rules Config_Services application [ config_services ]
 
-set rulebase security rules Palo log-start no
+set rulebase security rules Config_Services log-start no
 
-set rulebase security rules Palo log-start yes
+set rulebase security rules Config_Services log-start yes
 
 
-set rulebase security rules Palo profile-setting group any
+set rulebase security rules Block_VPN profile-setting group NS
 
-set rulebase security rules Palo description "Block_VPN"
+set rulebase security rules Block_VPN description "Block Tailscale, Wireguard, etc anywhere"
 
-set rulebase security rules Palo action Block Tailscale, Wireguard, etc anywhere
+set rulebase security rules Block_VPN action drop
 
-set rulebase security rules Palo service application-default
+set rulebase security rules Block_VPN service application-default
 
-set rulebase security rules Palo from [ drop ]
+set rulebase security rules Block_VPN from [ any ]
 
-set rulebase security rules Palo to [ any ]
+set rulebase security rules Block_VPN to [ any ]
 
-set rulebase security rules Palo source [ any ]
+set rulebase security rules Block_VPN source [ any ]
 
-set rulebase security rules Palo destination [ any ]
+set rulebase security rules Block_VPN destination [ any ]
 
-set rulebase security rules Palo application [ NS ]
+set rulebase security rules Block_VPN application [ vpn_block ]
 
-set rulebase security rules Palo log-start no
+set rulebase security rules Block_VPN log-start no
 
-set rulebase security rules Palo log-start yes
+set rulebase security rules Block_VPN log-start yes
 
 
-set rulebase security rules Palo profile-setting group any
+set rulebase security rules Block_GUI profile-setting group NS
 
-set rulebase security rules Palo description "Block_GUI"
+set rulebase security rules Block_GUI description "Block Palo web interface"
 
-set rulebase security rules Palo action Block Palo web interface
+set rulebase security rules Block_GUI action drop
 
-set rulebase security rules Palo service application-default
+set rulebase security rules Block_GUI service application-default
 
-set rulebase security rules Palo from [ drop ]
+set rulebase security rules Block_GUI from [ any ]
 
-set rulebase security rules Palo to [ any ]
+set rulebase security rules Block_GUI to [ any ]
 
-set rulebase security rules Palo source [ any ]
+set rulebase security rules Block_GUI source [ any ]
 
-set rulebase security rules Palo destination [ any ]
+set rulebase security rules Block_GUI destination [ any ]
 
-set rulebase security rules Palo application [ NS ]
+set rulebase security rules Block_GUI application [ panos-web-interface ]
 
-set rulebase security rules Palo log-start no
+set rulebase security rules Block_GUI log-start no
 
-set rulebase security rules Palo log-start yes
+set rulebase security rules Block_GUI log-start yes
 
 
-set rulebase security rules Palo profile-setting group private_bastion
+set rulebase security rules Bastion_Services profile-setting group NS
 
-set rulebase security rules Palo description "Bastion_Services"
+set rulebase security rules Bastion_Services description "Allow SSH from WAN to Bastion"
 
-set rulebase security rules Palo action Allow SSH from WAN to Bastion
+set rulebase security rules Bastion_Services action allow
 
-set rulebase security rules Palo service application-default
+set rulebase security rules Bastion_Services service application-default
 
-set rulebase security rules Palo from [ allow ]
+set rulebase security rules Bastion_Services from [ WAN ]
 
-set rulebase security rules Palo to [ WAN ]
+set rulebase security rules Bastion_Services to [ Private Management ]
 
-set rulebase security rules Palo source [ Private Management ]
+set rulebase security rules Bastion_Services source [ public_subnet ]
 
-set rulebase security rules Palo destination [ public_subnet ]
+set rulebase security rules Bastion_Services destination [ private_bastion ]
 
-set rulebase security rules Palo application [ NS ]
+set rulebase security rules Bastion_Services application [ bastion_services ]
 
-set rulebase security rules Palo log-start no
+set rulebase security rules Bastion_Services log-start no
 
-set rulebase security rules Palo log-start yes
+set rulebase security rules Bastion_Services log-start yes
 
 
-set rulebase security rules Palo profile-setting group private_ubuntu
+set rulebase security rules Ubuntu_Services profile-setting group NS
 
-set rulebase security rules Palo description "Ubuntu_Services"
+set rulebase security rules Ubuntu_Services description "Allow DNS, HTTP, SSH from WAN to Ubuntu"
 
-set rulebase security rules Palo action Allow DNS, HTTP, SSH from WAN to Ubuntu
+set rulebase security rules Ubuntu_Services action allow
 
-set rulebase security rules Palo service application-default
+set rulebase security rules Ubuntu_Services service application-default
 
-set rulebase security rules Palo from [ allow ]
+set rulebase security rules Ubuntu_Services from [ WAN ]
 
-set rulebase security rules Palo to [ WAN ]
+set rulebase security rules Ubuntu_Services to [ Private ]
 
-set rulebase security rules Palo source [ Private ]
+set rulebase security rules Ubuntu_Services source [ public_subnet ]
 
-set rulebase security rules Palo destination [ public_subnet ]
+set rulebase security rules Ubuntu_Services destination [ private_ubuntu ]
 
-set rulebase security rules Palo application [ NS ]
+set rulebase security rules Ubuntu_Services application [ ubuntu_services ]
 
-set rulebase security rules Palo log-start no
+set rulebase security rules Ubuntu_Services log-start no
 
-set rulebase security rules Palo log-start yes
+set rulebase security rules Ubuntu_Services log-start yes
 
 
-set rulebase security rules Palo profile-setting group private_docker
+set rulebase security rules Docker_Services profile-setting group NS
 
-set rulebase security rules Palo description "Docker_Services"
+set rulebase security rules Docker_Services description "Allow FTP, TFTP, SMTP, HTTP, HTTPS, SMB, SSH from WAN to Docker"
 
-set rulebase security rules Palo action Allow FTP, TFTP, SMTP, HTTP, HTTPS, SMB, SSH from WAN to Docker
+set rulebase security rules Docker_Services action allow
 
-set rulebase security rules Palo service application-default
+set rulebase security rules Docker_Services service application-default
 
-set rulebase security rules Palo from [ allow ]
+set rulebase security rules Docker_Services from [ WAN ]
 
-set rulebase security rules Palo to [ WAN ]
+set rulebase security rules Docker_Services to [ Private ]
 
-set rulebase security rules Palo source [ Private ]
+set rulebase security rules Docker_Services source [ public_subnet ]
 
-set rulebase security rules Palo destination [ public_subnet ]
+set rulebase security rules Docker_Services destination [ private_docker ]
 
-set rulebase security rules Palo application [ NS ]
+set rulebase security rules Docker_Services application [ docker_services ]
 
-set rulebase security rules Palo log-start no
+set rulebase security rules Docker_Services log-start no
 
-set rulebase security rules Palo log-start yes
+set rulebase security rules Docker_Services log-start yes
 
 
-set rulebase security rules Palo profile-setting group any
+set rulebase security rules Default_Deny profile-setting group NS
 
-set rulebase security rules Palo description "Default_Deny"
+set rulebase security rules Default_Deny description "Default deny"
 
-set rulebase security rules Palo action Default deny
+set rulebase security rules Default_Deny action drop
 
-set rulebase security rules Palo service application-default
+set rulebase security rules Default_Deny service application-default
 
-set rulebase security rules Palo from [ drop ]
+set rulebase security rules Default_Deny from [ any ]
 
-set rulebase security rules Palo to [ any ]
+set rulebase security rules Default_Deny to [ any ]
 
-set rulebase security rules Palo source [ any ]
+set rulebase security rules Default_Deny source [ any ]
 
-set rulebase security rules Palo destination [ any ]
+set rulebase security rules Default_Deny destination [ any ]
 
-set rulebase security rules Palo application [ NS ]
+set rulebase security rules Default_Deny application [ any ]
 
-set rulebase security rules Palo log-start no
+set rulebase security rules Default_Deny log-start no
 
-set rulebase security rules Palo log-start yes
+set rulebase security rules Default_Deny log-start yes
 
 
 set rulebase default-security-rules rules intrazone-default action drop
