@@ -30,13 +30,13 @@ set address-group all_palo static [ public_palo private_palo manage_palo ]
 set address-group service_boxes static [ private_ubuntu private_docker private_bastion ]
 
 
-set application-group toggle_allow members [ web-browsing ssl dns dns-base ping ocsp ]
+set application-group toggle_allow members [ web-browsing ssl dns dns-base ping ocsp panos-web-interface ]
 
 set application-group outbound_updates members [ paloalto-updates pan-db-cloud apt-get dnf yum ms-update git-base github-base ]
 
 set application-group config_services members [ ssh ]
 
-set application-group vpn_block members [ tailscale hamachi wireguard open-vpn tor ]
+set application-group vpn_block members [ tailscale hamachi wireguard open-vpn tor disord telegram telegram-base ]
 
 set application-group bastion_services members [ ssh ]
 
