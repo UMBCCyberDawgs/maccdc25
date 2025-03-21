@@ -61,5 +61,5 @@
 -a never,exit -F arch=b32 -F dir=/var/lock/lvm/ -F key=locklvm
 -a never,exit -F arch=b64 -F dir=/var/lock/lvm/ -F key=locklvm
 
--a always,exit -F arch=b32 -S execve -F euid=0
--a always,exit -F arch=b64 -S execve -F euid=0
+-a always,exit -F arch=b32 -S execve 
+-a always,exit -F arch=b64 -S execve 
