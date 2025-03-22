@@ -1,0 +1,44 @@
+set cli scripting-mode on
+
+
+set system setting shared-policy disable
+
+set system setting template disable
+
+
+configure
+
+
+set deviceconfig system service disable-telnet yes disable-http yes disable-http-ocsp yes disable-https yes disable-icmp yes
+
+set deviceconfig system service disable-snmp yes disable-userid-service yes disable-userid-syslog-listener-ssl yes disable-userid-syslog-listener-udp yes
+
+
+set deviceconfig setting management disable-commit-recovery yes
+
+delete deviceconfig system panorama
+
+
+set deviceconfig setting management admin-session max-session-time 60
+
+set deviceconfig setting management idle-timeout 14
+
+set deviceconfig setting management admin-lockout failed-attempts 3
+
+set deviceconfig setting management admin-lockout lockout-time 4
+
+set deviceconfig setting management auto-acquire-commit-lock yes
+
+
+set deviceconfig system login-banner "THE CORE OF MY DESIGN / YOUR EYES LOOK DOWN AT MINE / IT NEVER TRULY ENDS / AS METAL BREAKS AND BENDS ..."
+
+set deviceconfig system ack-login-banner yes
+
+
+exit
+
+set cli scripting-mode off
+
+configure
+
+commit

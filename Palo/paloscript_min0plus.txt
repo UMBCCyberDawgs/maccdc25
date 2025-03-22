@@ -1,13 +1,9 @@
 set cli scripting-mode on
 
-configure
 
-exit
+set deviceconfig system service disable-telnet yes disable-http yes disable-http-ocsp disable-https yes disable-icmp yes
 
-
-set deviceconfig system service disable-telnet yes disable-http yes disable-icmp yes
-
-set deviceconfig system service disable-http-ocsp yes disable-snmp yes disable-userid-syslog-listener-ssl yes disable-userid-syslog-listener-udp yes
+set deviceconfig system service yes disable-snmp yes disable-userid-service disable-userid-syslog-listener-ssl yes disable-userid-syslog-listener-udp yes
 
 
 set system setting shared-policy disable
